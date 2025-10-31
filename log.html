@@ -132,7 +132,11 @@
     const db = getDatabase(app);
     const dbRef = ref(db);
 
+    goOffline(db);
+
     async function handleLogin() {
+
+     goOnline(db);
       const roll = document.getElementById("roll").value.trim();
       const pass = document.getElementById("pwd").value.trim();
 
@@ -180,3 +184,4 @@
 
 </body>
 </html>
+
