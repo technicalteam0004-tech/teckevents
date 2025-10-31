@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins", sans-serif; }
+  
+  body {
+    background: url("https://images.unsplash.com/photo-1741342293557-e3051712838b?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=464") 
+    no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .signup-container {
+    width: 100%;
+    max-width: 360px;
+    padding: 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .signup-container h2 {
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  .input-box {
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .input-box input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    outline: none;
+    border-radius: 8px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    color: #fff;
+    transition: 0.3s ease;
+  }
+
+  .input-box input:focus {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .input-box input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .signup-btn {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 10px;
+    background: transparent;
+    transition: 0.3s;
+  }
+
+  .signup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .error { 
+    color:#ff8a80; 
+    font-size:12px; 
+    text-align:left; 
+    min-height:14px; 
+    margin-top:3px; 
+    margin-bottom:8px; 
+    padding-left:5px; 
+  }
+</style>
+</head>
+<body>
+
+  <div class="signup-container">
+    <h2>Login</h2>
+    <form id="signupForm">
+      <div class="input-box">
+        <input type="text" id="roll" placeholder="Roll No (e.g. 23BCA119)" required>
+        <div class="error" id="usernameError"></div>
+      </div>
+      <div class="input-box">
+        <input type="text" id="pwd" placeholder="Password" required>
+        <div class="error" id="rollError"></div>
+      </div>
+      <button type="submit" class="signup-btn">Login</button>
+    </form>
+  </div>
+
+  <!-- Firebase connection + login verification -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getDatabase, ref, get, child, goOffline, goOnline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDqO3hwGX_0P70gAH0pnee-my-qtPPYzJE",
+      authDomain: "eve-it444.firebaseapp.com",
+      projectId: "eve-it444",
+      storageBucket: "eve-it444.firebasestorage.app",
+      messagingSenderId: "849143823217",
+      appId: "1:849143823217:web:c09d7037fd1e52e80114d0",
+      databaseURL: "https://eve-it444-default-rtdb.firebaseio.com/"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const dbRef = ref(db);
+
+    async function handleLogin() {
+      const roll = document.getElementById("roll").value.trim();
+      const pass = document.getElementById("pwd").value.trim();
+
+      if (!roll || !pass) {
+        alert("Please fill all fields!");
+        return;
+      }
+
+      try {
+        goOnline(db);
+        console.log("Firebase connection opened...");
+
+        const snapshot = await get(child(dbRef, `users/${roll}`));
+
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          if (data.password === pass) {
+            localStorage.setItem("username", data.username?.trim() || "");
+            localStorage.setItem("rollno", roll);
+            localStorage.setItem("password", pass);
+            alert("✅ Login successful!");
+             window.location.href = "manu.html";
+          } else {
+            alert("❌ Incorrect password!");
+          }
+        } else {
+          alert("❌ No user found with this Roll No!");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error connecting to database.");
+      } finally {
+        setTimeout(() => {
+          goOffline(db);
+          console.log("Firebase connection closed safely.");
+        }, 800);
+      }
+    }
+
+    document.querySelector(".signup-btn").addEventListener("click", (e) => {
+      e.preventDefault();
+      handleLogin();
+    });
+  </script>
+
+</body>
+</html>
