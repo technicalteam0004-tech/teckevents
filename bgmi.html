@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registered BGMI Squads</title>
+  <style>
+    :root {
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.15);
+      --radius: 18px;
+      --font: "Poppins", sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--font);
+    }
+
+    body {
+      background: 
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url("https://images.hdqwalls.com/download/2020-pubg-game-8k-96-1080x2160.jpg") 
+        no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #fff;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 6px rgba(255,255,255,0.2);
+    }
+
+    .squad-list {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .squad-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      backdrop-filter: blur(2px) saturate(100%);
+      -webkit-backdrop-filter: blur(5px) saturate(100%);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease;
+    }
+
+    .squad-card:hover {
+      transform: scale(1.02);
+    }
+
+    .squad-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffe57f;
+      margin-bottom: 10px;
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    .players {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 14px;
+      color: #e0e0e0;
+      padding-left: 8px;
+    }
+
+    .players span {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .empty {
+      text-align: center;
+      opacity: 0.8;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 480px) {
+      .squad-card { padding: 14px; }
+      .squad-name { font-size: 16px; }
+      .players span { font-size: 13px; }
+    }
+     /* Smooth fade-in animation for all elements */
+  * {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Optional: make transitions smoother on hover or other changes */
+  * {
+    transition: all 1s ease-in-out;
+  }
+  </style>
+</head>
+<body>
+  <h1>Registered BGMI Squads</h1>
+  <div class="squad-list" id="squadList">
+    <p class="empty">Loading squads...</p>
+  </div>
+
+  <!-- ✅ Firebase Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getDatabase, ref, get, goOffline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDqO3hwGX_0P70gAH0pnee-my-qtPPYzJE",
+      authDomain: "eve-it444.firebaseapp.com",
+      databaseURL: "https://eve-it444-default-rtdb.firebaseio.com/",
+      projectId: "eve-it444",
+      storageBucket: "eve-it444.firebasestorage.app",
+      messagingSenderId: "849143823217",
+      appId: "1:849143823217:web:c09d7037fd1e52e80114d0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const squadList = document.getElementById("squadList");
+
+    async function loadSquads() {
+      try {
+        const snapshot = await get(ref(db, "bgmireg"));
+        squadList.innerHTML = "";
+
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          Object.keys(data).forEach(key => {
+            const team = data[key];
+            const div = document.createElement("div");
+            div.className = "squad-card";
+            div.innerHTML = `
+              <div class="squad-name">${team.squadName || key}</div>
+              <div class="players">
+                <span>🎯 Player 1 — ${team.players.player1.roll}</span>
+                <span>🎯 Player 2 — ${team.players.player2.roll}</span>
+                <span>🎯 Player 3 — ${team.players.player3.roll}</span>
+                <span>🎯 Player 4 — ${team.players.player4.roll}</span>
+              </div>
+            `;
+            squadList.appendChild(div);
+          });
+        } else {
+          squadList.innerHTML = `<p class="empty">No squads registered yet.</p>`;
+        }
+      } catch (err) {
+        console.error(err);
+        squadList.innerHTML = `<p class="empty">❌ Error loading squads.</p>`;
+      } finally {
+        goOffline(db); // ✅ Immediately close connection after load
+      }
+    }
+
+    loadSquads();
+  </script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>College Events</title>
+  <link rel="stylesheet" href="event.css" />
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".event-card");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add("visible");
+        }, index * 150); // smooth stagger
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  cards.forEach(card => observer.observe(card));
+});
+</script>
+
+<body>
+  <div class="event-container">
+
+    <!-- 🏆 Hackathon Card -->
+    <div class="event-card">
+      <div class="event-image">
+        <img src="https://media.istockphoto.com/id/1408255024/photo/developers-discussing-programming-code.jpg?s=612x612&w=0&k=20&c=W8HQvPEwDMzk5Vw9bA0EoJIhG-ETDiW0wed4GB8lReA=" alt="Hackathon">
+      </div>
+      <div class="event-content">
+        <h3>Hackathon</h3>
+        <p>coding marathon where innovation meets creativity. Build groundbreaking solutions and innovation.</p>
+        <div class="event-details">
+          <p>📅 March 15–16, 2025</p>
+          <p>⏰ 9:00 AM – 9:00 AM</p>
+          <p>📍 Tech Hub Auditorium</p>
+        </div>
+        <div class="event-buttons">
+          <button onclick="setEvent('TechFest2025')" class="btn register">Register Now</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- 💡 Digital Presents Card -->
+    <div class="event-card">
+      <div class="event-image">
+        <img src="https://media.istockphoto.com/id/1371339413/photo/co-working-team-meeting-concept-businessman-using-smart-phone-and-digital-tablet-and-laptop.jpg?s=612x612&w=0&k=20&c=ysEsVw3q2axYt3oVZAuQjtHRlN3lY-U_e0ikK5yKIXQ=" alt="Digital Presents">
+      </div>
+      <div class="event-content">
+        <h3>Digital Presents</h3>
+        <p>Step into the world of modern web creation with Digital Presents — an exciting, hands-on event designed to turn your web ideas into reality!</p>
+        <div class="event-details">
+          <p>📅 April 5, 2025</p>
+          <p>⏰ 11:00 AM – 6:00 PM</p>
+          <p>📍 Digital Convention Hall</p>
+        </div>
+        <div class="event-buttons">
+       <button onclick="setEvent('DigitalPresents')" class="btn register">Register Now</button>
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="event-card">
+      <div class="event-image">
+        <img src="https://images.unsplash.com/photo-1684360558160-a614e0c3c205?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1332" alt="Digital Presents">
+      </div>
+      <div class="event-content">
+        <h3>Typing Master – Speed. Accuracy. Focus.</h3>
+        <p>Put your typing skills to the ultimate test with Typing Master, a fast-paced competition designed to measure your speed, accuracy, and presence of mind.</p>
+        <div class="event-details">
+          <p>📅 April 5, 2025</p>
+          <p>⏰ 11:00 AM – 6:00 PM</p>
+          <p>📍 Digital Convention Hall</p>
+        </div>
+        <div class="event-buttons">
+        <button onclick="setEvent('TypingMaster')" class="btn register">Register Now</button>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="event-card">
+      <div class="event-image">
+        <img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200326191711/How-to-Think-Like-a-Programmer.png" alt="Digital Presents">
+      </div>
+      <div class="event-content">
+        <h3>Code Conclave – Think. Code. Conquer.</h3>
+        <p>Step into the world of logic, innovation, and coding brilliance with Code Conclave — a coding competition designed to challenge your problem-solving skills and creativity.</p>
+        <div class="event-details">
+          <p>📅 April 5, 2025</p>
+          <p>⏰ 11:00 AM – 6:00 PM</p>
+          <p>📍 Digital Convention Hall</p>
+        </div>
+        <div class="event-buttons">
+       <button onclick="setEvent('codeconclave')" class="btn register">Register Now</button>
+
+        </div>
+      </div>
+    </div>
+
+
+
+ <div class="event-card">
+      <div class="event-image">
+        <img src="https://media.sportstiger.com/media/bgmi-3rd-anniversary-date-upcoming-skins-and-more-sportstiger-1716986754783-original.webp" alt="Digital Presents">
+      </div>
+      <div class="event-content">
+        <h3>Mobile Gaming – BGMI Showdown</h3>
+        <p>Gear up for the ultimate BGMI (Battlegrounds Mobile India) tournament!
+Join solo or with your squad and battle it out in intense matches filled with strategy, teamwork, and pure adrenaline.</p>
+        <div class="event-details">
+          <p>📅 April 5, 2025</p>
+          <p>⏰ 11:00 AM – 6:00 PM</p>
+          <p>📍 Digital Convention Hall</p>
+        </div>
+        <div class="event-buttons">
+       <button class="btn register" onclick="window.location.href='reggaming.html'">
+  Register Now
+</button>
+
+        </div>
+      </div>
+    </div>
+
+
+
+     <div class="event-card">
+      <div class="event-image">
+        <img src="https://assets.thehansindia.com/h-upload/2023/12/18/1407606-quiz.webp" alt="Digital Presents">
+      </div>
+      <div class="event-content">
+        <h3>Quiz Challenge! 🧠</h3>
+        <p>Join us for an exciting Quiz Event filled with brain-teasing fun and friendly competition! Test your knowledge, speed, and strategy across 3 thrilling rounds – all MCQ-based!</p>
+        <div class="event-details">
+          <p>📅 April 5, 2025</p>
+          <p>⏰ 11:00 AM – 6:00 PM</p>
+          <p>📍 Digital Convention Hall</p>
+        </div>
+        <div class="event-buttons">
+        <button onclick="setEvent('Quiz')" class="btn register">Register Now</button>
+
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <div id="loginModal">
+    <iframe src="auth-modal.html" id="loginFrame"></iframe>
+  </div>
+   <div id="loginModal2">
+    <iframe src="reg.html" id="loginFrame"></iframe>
+  </div>
+  <script>
+  
+
+   function setEvent(eventName) {
+      selectedEvent = eventName; // set global variable
+      localStorage.setItem("eventName", eventName);
+    // optional: store globally across pages
+      console.log("Global variable set to:", selectedEvent);
+      openLoginModal();
+    }
+
+
+
+  const loginModal = document.getElementById('loginModal');
+  const loginModal2 = document.getElementById('loginModal2');
+
+  // Function to open login modal (called via onclick)
+  function openLoginModal() {
+  const username = localStorage.getItem('username');
+  const rollno   = localStorage.getItem('rollno');
+  const password = localStorage.getItem('password');
+
+  if (!username || !rollno || !password) {
+    // 🔁 Reload iframe each time before showing
+    const frame = document.querySelector('#loginModal iframe');
+    frame.src = frame.src;
+
+    loginModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    history.pushState(null, null, location.href);
+  } else {
+    // 🔁 Reload second iframe each time before showing
+    const frame2 = document.querySelector('#loginModal2 iframe');
+    frame2.src = frame2.src;
+
+    loginModal2.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    history.pushState(null, null, location.href);
+  }
+}
+
+
+  // Close both modals
+  function closeModal() {
+    loginModal.classList.remove('show');
+    loginModal2.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  }
+
+  // Listen for close from iframe
+  window.addEventListener('message', (event) => {
+    if (event.data === 'closeLogin') {
+      closeModal();
+    }
+  });
+
+  // Close if clicked outside iframe
+  loginModal.addEventListener('click', (e) => {
+    if (e.target === loginModal) {
+      closeModal();
+    }
+  });
+
+  loginModal2.addEventListener('click', (e) => {
+    if (e.target === loginModal2) {
+      closeModal();
+    }
+  });
+
+  // Prevent back navigation issue
+  window.addEventListener('popstate', () => {
+    if (loginModal.classList.contains('show') || loginModal2.classList.contains('show')) {
+      closeModal();
+      history.pushState(null, null, location.href);
+    }
+  });
+
+
+
+
+
+
+  
+</script>
+
+</body>
+</html>

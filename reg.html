@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Registration Modal</title>
+  <style>
+    * { 
+      margin:0; 
+      padding:0; 
+      box-sizing:border-box; 
+      font-family:"Poppins", sans-serif; 
+      color: white;
+    }
+
+    /* Modal Overlay (center everything) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 10px; /* for small screen spacing */
+    }
+
+    /* Modal Card */
+    .modal-content {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px) saturate(150%);
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+      padding: 25px 35px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+    }
+
+    /* 🔹 Mobile Responsive Adjustment */
+    @media (max-width: 480px) {
+      .modal-content {
+        width: 95%;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    h2 { margin-bottom: 10px; color: white; }
+    p { opacity: 0.9; margin-bottom: 20px; color: white; }
+
+    .info {
+      margin: 15px 0;
+      text-align: center;
+      background: rgba(255,255,255,0.15);
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 10px;
+      cursor: pointer;
+      color: white;
+    }
+
+    select {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      outline: none;
+    }
+
+    button {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.4);
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+    }
+
+    /* Close button */
+    .close-btn {
+      position: absolute;
+      top: -15px;
+      right: 7px;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+      color: white;
+      cursor: pointer;
+      line-height: 15px;
+    }
+
+   
+</style>
+
+</head>
+<body>
+
+  <!-- Modal -->
+ 
+    <div class="modal-content" id="eventModal">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <h2>Register for Event</h2>
+      <p>Welcome <span id="uname"></span> (<span id="roll"></span>)</p>
+
+      <div class="info">
+        
+        <p>Please confirm if you want to participate in the <span id="eve"></span>
+
+      </div>
+
+      <button id="registerBtn">Register Now</button>
+    </div>
+  
+
+  <script type="module">
+    
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getDatabase, ref, set, get, child, goOffline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDqO3hwGX_0P70gAH0pnee-my-qtPPYzJE",
+      authDomain: "eve-it444.firebaseapp.com",
+      databaseURL: "https://eve-it444-default-rtdb.firebaseio.com/",
+      projectId: "eve-it444",
+      storageBucket: "eve-it444.appspot.com",
+      messagingSenderId: "849143823217",
+      appId: "1:849143823217:web:c09d7037fd1e52e80114d0"
+    };
+
+     window.closeModal = function() {
+      window.parent.postMessage('closeLogin','*');
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const username = localStorage.getItem("username");
+    const rollno = localStorage.getItem("rollno");
+   
+
+    document.getElementById("uname").textContent = username || "Unknown User";
+    document.getElementById("roll").textContent = rollno || "N/A";
+  
+     const selectedEvent = localStorage.getItem("eventName");
+     document.getElementById("eve").textContent = selectedEvent;
+  
+      
+
+    document.getElementById("registerBtn").addEventListener("click", async () => {
+         
+      if (!username || !rollno) {
+        alert("❌ Missing user info. Please log in again.");
+        window.location.href = "index.html";
+        return;
+      }
+
+      try {
+        const dbRef = ref(db);
+        const snapshot = await get(child(dbRef, "eventRegistrations/" + rollno + "/" + selectedEvent));
+
+        if (snapshot.exists()) {
+          alert(`⚠️ You are already registered for "${selectedEvent}"!`);
+          goOffline(db);
+          console.log("Database disconnected after duplicate event check.");
+          return;
+        }
+
+        await set(ref(db, "eventRegistrations/" + rollno + "/" + selectedEvent ), {
+          username: username,
+          rollno: rollno,
+          event: selectedEvent,
+          score: "-",
+          timestamp: new Date().toISOString()
+        });
+
+        goOffline(db);
+        console.log("Database disconnected after successful insert.");
+
+        alert(`✅ ${username} registered successfully for ${selectedEvent}!`);
+         closeModal();
+      } catch (err) {
+        alert("❌ Error registering: " + err.message);
+        goOffline(db);
+        console.log("Database disconnected after error.");
+         location.reload();
+         closeModal();
+       
+      }
+    });
+
+  </script>
+</body>
+</html>

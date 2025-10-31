@@ -1,0 +1,164 @@
+/* ----------------------- */
+/* Base reset and fonts */
+/* ----------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ----------------------- */
+/* Background setup */
+/* ----------------------- */
+body {
+  background-color: #fbfbfb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: radial-gradient(1200px 600px at 20% 30%, #ead0e1 0%, transparent 30%),
+              linear-gradient(180deg, #eeecf8 0%, #f3eefa 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* ----------------------- */
+/* Container styling */
+/* ----------------------- */
+.container {
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+/* ----------------------- */
+/* Title */
+/* ----------------------- */
+.title {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-family: "Playwrite US Modern", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+/* ----------------------- */
+/* Logo */
+/* ----------------------- */
+.logo img {
+  width: 190px;
+  height: auto;
+  margin: 10px 0 20px 0;
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+/* ----------------------- */
+/* Welcome text */
+/* ----------------------- */
+.welcome {
+  font-size: 1.3rem;
+  color: #3cc3e8;
+  font-weight: 700;
+  margin-bottom: 40px;
+  line-height: 1.4;
+  font-family: "Playwrite US Modern", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+  animation-delay: 0.6s;
+}
+
+/* ----------------------- */
+/* Start button */
+/* ----------------------- */
+.start-btn {
+  background-color: #00bfff;
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards;
+  animation-delay: 0.8s;
+}
+
+
+.start-btn:hover {
+  background-color: #0099cc;
+}
+
+/* ----------------------- */
+/* Keyframe animations */
+/* ----------------------- */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* ----------------------- */
+/* Start button */
+/* ----------------------- */
+.start-btn {
+  background-color: #00bfff;
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out forwards, buttonPulse 2.5s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+/* Hover effect */
+.start-btn:hover {
+  background-color: #0099cc;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+}
+
+/* ----------------------- */
+/* Button pulse animation */
+/* ----------------------- */
+@keyframes buttonPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 191, 255, 0);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 12px rgba(0, 191, 255, 0.3);
+  }
+}
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winners</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Playwrite+AU+TAS:wght@300&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    background: url("https://images.unsplash.com/photo-1615715932123-de86db41ad40?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=387") no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 60px 100px;
+    border-radius: 25px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeInUp 1.5s ease forwards;
+    opacity: 0;
+  }
+
+  h1 {
+    font-family: "Playwrite AU TAS", cursive;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-weight: 400;
+  }
+
+  /* Smooth entry animation */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="glass-card">
+    <h1>🏆 Winners </h1>
+    <p>Winners not announced yet...</p>
+  </div>
+
+</body>
+</html>

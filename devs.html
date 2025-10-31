@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&family=Oswald&family=Playwrite+AU+TAS:wght@100..400&family=Playwrite+US+Modern:wght@100..400&family=Satisfy&display=swap" rel="stylesheet">
+<title>About Developers</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    background: url("https://images.unsplash.com/photo-1615716272071-c588ae57f050?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=387") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    color: #fff;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.4);
+    font-family: "Playwrite AU TAS", cursive;
+    animation: fadeInUp 1.2s ease forwards;
+  }
+
+  .dev-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    width: 90%;
+    max-width: 1000px;
+  }
+
+  .dev-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1s ease forwards;
+  }
+
+  .dev-card:nth-child(1) { animation-delay: 0.3s; }
+  .dev-card:nth-child(2) { animation-delay: 0.5s; }
+  .dev-card:nth-child(3) { animation-delay: 0.7s; }
+  .dev-card:nth-child(4) { animation-delay: 0.9s; }
+
+  .dev-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(255,255,255,0.4);
+  }
+
+  .dev-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.6);
+    margin-bottom: 15px;
+    object-fit: cover;
+  }
+
+  .dev-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .dev-role {
+    font-size: 0.95rem;
+    color: #f0f0f0;
+    opacity: 0.9;
+  }
+
+  footer {
+    margin-top: 50px;
+    font-size: 0.9rem;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards;
+    animation-delay: 1.3s;
+  }
+
+  /* ✨ Smooth animation keyframes */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <h1>Meet Our &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Developers</h1>
+
+  <div class="dev-container">
+    <div class="dev-card">
+      <img src="https://i.postimg.cc/vTsDm8FM/e3d5f2bca76175094a4fa6bd83afc9c5.jpg" alt="Mangal Prajapati">
+      <div class="dev-name">Mangal Prajapati</div>
+      <div class="dev-role">Tester & Project Advisor</div>
+    </div>
+
+    <div class="dev-card">
+      <img src="https://i.postimg.cc/D0JWD4P9/Screenshot-2025-10-31-100605.png" alt="Thakor Kiran">
+      <div class="dev-name">Thakor Kiran</div>
+      <div class="dev-role">Frontend & Backend Developer</div>
+    </div>
+
+    <div class="dev-card">
+      <img src="https://i.pinimg.com/736x/22/2e/1a/222e1a75b67a3dabe19b71f7df3e6f5c.jpg" alt="Krishna Kanojiya">
+      <div class="dev-name">Krishna Kanojiya</div>
+      <div class="dev-role">Frontend Developer</div>
+    </div>
+
+    <div class="dev-card">
+      <img src="https://wallpapers.com/images/high/captain-marvel-anime-style-da1yod4s3dpfclx7.webp" alt="Prajapati Komal">
+      <div class="dev-name">Prajapati Komal</div>
+      <div class="dev-role">Frontend Developer</div>
+    </div>
+  </div>
+
+  <footer>@ 2025 Team MK<sup>3</sup> Developers </footer>
+
+</body>
+</html>

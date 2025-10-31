@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auth Modal</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins", sans-serif; }
+  
+.signup-container {
+  transition: opacity 0.4s ease; /* fade animation */
+}
+.signup-container.fade-out {
+  opacity: 0;
+}
+
+
+
+ body {
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.lb{
+   padding: 1px; border-radius: 5px;
+   
+  
+}
+  .signup-container {
+    width: 100%; max-width:360px;
+    padding:25px; border-radius:15px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border:1px solid rgba(255,255,255,0.25);
+    box-shadow:0 4px 25px rgba(0,0,0,0.3);
+    text-align:center;
+    position: relative;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+
+  .signup-container h2 {
+    margin-bottom:20px; font-size:1.6rem; font-weight:600;
+  }
+
+  .input-box {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.25);  /* subtle white border */
+  outline: none;
+  border-radius: 8px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.1);        /* transparent background */
+  backdrop-filter: blur(10px) saturate(150%);  /* glass blur effect */
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  color: #fff;                                 /* white text */
+  transition: 0.3s ease;
+}
+
+/* 🔍 Focus effect */
+.input-box input:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Optional placeholder color */
+.input-box input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+ .signup-btn {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  cursor: pointer;
+  margin-top: 10px;
+  background: transparent;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.signup-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+  .close-btn {
+    position:absolute; top:8px; right:15px;
+    font-size:24px; color:#fff; cursor:pointer;
+  }
+
+  .error { color:#ff8a80; font-size:12px; text-align:left; min-height:14px; margin-top:3px; margin-bottom:8px; padding-left:5px; }
+</style>
+</head>
+<body>
+  <div class="signup-container" id="modalBox">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+      <div class="input-box">
+        <input type="text" id="username" placeholder="Username" required>
+        <div class="error" id="usernameError"></div>
+      </div>
+      <div class="input-box">
+        <input type="text" id="rollno" placeholder="Roll No (e.g. 23BCA119)" required>
+        <div class="error" id="rollError"></div>
+      </div>
+      <div class="input-box">
+        <input type="password" id="password" placeholder="Password" required>
+        <div class="error" id="passError"></div>
+      </div>
+      <button type="submit" class="signup-btn">Create Account</button>
+       <p style="margin-top:10px; color:#fff;">
+  Already have an account? 
+  <a href="#" onclick="openLogin()" style="color:#00bfff; text-decoration:underline; cursor:pointer;">
+    Login
+  </a>
+</p>
+
+    </form>
+  </div>
+
+  <!-- Firebase JS SDKs -->
+  <script type="module">
+
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getDatabase, ref, set, get, child, goOffline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDqO3hwGX_0P70gAH0pnee-my-qtPPYzJE",
+      authDomain: "eve-it444.firebaseapp.com",
+      databaseURL: "https://eve-it444-default-rtdb.firebaseio.com/",
+      projectId: "eve-it444",
+      storageBucket: "eve-it444.appspot.com",
+      messagingSenderId: "849143823217",
+      appId: "1:849143823217:web:c09d7037fd1e52e80114d0"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+   window.closeModal = function() {
+      window.parent.postMessage('closeLogin','*');
+    };
+
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username');
+      let roll = document.getElementById('rollno').value.trim().toUpperCase(); // Normalize to uppercase
+      const pass = document.getElementById('password');
+      const usernameError = document.getElementById('usernameError');
+      const rollError = document.getElementById('rollError');
+      const passError = document.getElementById('passError');
+
+      usernameError.textContent = '';
+      rollError.textContent = '';
+      passError.textContent = '';
+
+      let valid = true;
+
+      if(username.value.trim().length < 3) {
+        usernameError.textContent = 'Username must be at least 3 characters';
+        valid = false;
+      }
+
+      const rollPattern = /^[0-9]{2}(BCA|IT)[0-9]{3}$/i;
+      if(!rollPattern.test(roll)) {
+        rollError.textContent = 'Enter valid Roll No (e.g. 23BCA119)';
+        valid = false;
+      }
+
+      const passPattern = /^(?=.*[!@#$%^&*()_+\-={}\[\]|:;"'<>,.?\/]).{6,}$/;
+      if(!passPattern.test(pass.value.trim())) {
+        passError.textContent = 'Password must be 6+ chars with 1 special symbol';
+        valid = false;
+      }
+
+      if(!valid) return;
+
+      try {
+        const dbRef = ref(database);
+        const snapshot = await get(child(dbRef, 'users'));
+        if(snapshot.exists()){
+          const users = snapshot.val();
+          const rollExists = Object.keys(users).some(key => key.toUpperCase() === roll);
+          if(rollExists){
+            rollError.textContent = 'Roll No already registered!';
+            return;
+          }
+        }
+
+        await set(ref(database, 'users/' + roll), {
+          username: username.value.trim(),
+          rollNo: roll,
+          password: pass.value.trim()
+        });
+
+        goOffline(database);
+
+        // ✅ Store user info in localStorage (added section)
+        localStorage.setItem('username', username.value.trim());
+        localStorage.setItem('rollno', roll);
+        localStorage.setItem('password', pass.value.trim());
+        // ✅ End added section
+
+        alert('✅ Account Created Successfully');
+        closeModal();
+      } catch (error) {
+        alert('❌ Error: ' + error.message);
+      }
+    });
+
+
+
+
+   // 🔹 Dynamic Login Loader
+window.openLogin = async function() {
+  const box = document.getElementById('modalBox');
+  box.classList.add('fade-out');
+  setTimeout(async () => {
+    const res = await fetch('login.html');
+    const html = await res.text();
+    box.innerHTML = html; // replace modal content
+    box.classList.remove('fade-out');
+  }, 400); // match fade transition
+};
+
+
+
+
+  </script>
+</body>
+</html>

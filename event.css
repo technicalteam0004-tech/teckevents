@@ -1,0 +1,220 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* --- Body & Background --- */
+body {
+  background: url("bgev.png") no-repeat center center/cover;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* --- Event Container --- */
+.event-container {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --- Glassmorphism Event Card --- */
+.event-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* Start hidden until scrolled into view */
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+}
+
+/* --- When visible (on-scroll animation trigger) --- */
+.event-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Hover effect */
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Image Section --- */
+.event-image {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+/* --- Event Icon --- */
+.event-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #000;
+  font-size: 20px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Content Section --- */
+.event-content {
+  padding: 15px;
+}
+
+.event-content h3 {
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 6px;
+}
+
+.event-content p {
+  font-size: 13px;
+  color: #000;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+/* --- Event Details --- */
+.event-details p {
+  font-size: 12px;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+/* --- Buttons --- */
+.event-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.btn.register {
+  background: rgba(85, 177, 217, 0.8);
+  color: #000;
+  backdrop-filter: blur(5px);
+}
+
+.btn.register:hover {
+  background: rgba(59, 131, 247, 0.8);
+}
+
+.btn.learn {
+  background: rgba(246, 79, 155, 0.8);
+  color: #000;
+  backdrop-filter: blur(5px);
+}
+
+.btn.learn:hover {
+  background: rgba(225, 58, 138, 0.8);
+}
+
+/* --- Mobile Responsive --- */
+@media (max-width: 480px) {
+  .event-container {
+    max-width: 95%;
+  }
+
+  .event-content h3 {
+    font-size: 16px;
+  }
+
+  .event-content p,
+  .event-details p {
+    font-size: 12px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 7px 0;
+  }
+}
+
+
+#loginModal {
+      display: none;
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      transition: opacity 0.3s ease;
+    }
+    #loginModal.show { display:flex; opacity:1; }
+
+    iframe {
+      border:none;
+      width:90%; max-width:400px;
+      height:450px; border-radius:15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    
+
+
+    #loginModal2 {
+      display: none;
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      transition: opacity 0.3s ease;
+    }
+    #loginModal2.show { display:flex; opacity:1; }
+
+    iframe {
+      border:none;
+      width:90%; max-width:400px;
+      height:450px; border-radius:15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+
+    @media(max-width:480px){ iframe { height:420px; } }

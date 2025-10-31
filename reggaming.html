@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gaming Registration — 4 Players</title>
+  <style>
+    :root {
+      --accent: rgba(167,139,250,0.9);
+      --card-bg: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.12);
+      --glass-radius: 16px;
+      --glass-padding: 20px;
+      font-family: "Poppins", sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+        radial-gradient(1000px 400px at 10% 10%, rgba(126,87,194,0.12), transparent),
+        radial-gradient(800px 300px at 90% 80%, rgba(79,70,229,0.08), transparent),
+        url("https://images.hdqwalls.com/download/play-big-in-pubg-mobile-or-1080x2160.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #e6eef8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      margin-top: 10px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--glass-radius);
+      backdrop-filter: blur(3px) saturate(120%);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      padding: var(--glass-padding);
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    p.lead {
+      margin: 0 0 16px 0;
+      opacity: 0.9;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .player {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 6px;
+      color: #000;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.4);
+      color: #000;
+      font-size: 14px;
+      outline: none;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+
+    input:focus {
+      box-shadow: 0 4px 12px rgba(236, 236, 241, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .players-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, rgba(167,139,250,0.95), rgba(99,102,241,0.95));
+      color: white;
+      box-shadow: 0 6px 24px rgba(99,102,241,0.18);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #dfe9ff;
+    }
+
+    .hint {
+      font-size: 12px;
+      opacity: 0.85;
+      text-align: center;
+    }
+
+    #squadName {
+      text-align: center;
+      font-weight: 600;
+      font-size: 15px;
+      background: rgba(255,255,255,0.6);
+      color: #000;
+    }
+
+    @media (max-width: 480px) {
+      body { align-items: flex-start; padding: 8px; }
+      .card { padding: 16px; }
+      h1 { font-size: 18px; }
+      #squadName { font-size: 16px; }
+    }
+     /* Smooth fade-in animation for all elements */
+  * {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Optional: make transitions smoother on hover or other changes */
+  * {
+    transition: all 1s ease-in-out;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="card">
+      <h1>Team Registration — 4 Players</h1>
+      <p class="lead">Enter your squad name and player details.</p>
+
+      <form id="regForm" autocomplete="off">
+        <div class="player">
+          <label for="squadName">Squad Name</label>
+          <input id="squadName" name="squadName" type="text" placeholder="e.g. The Elite Shooters" required />
+        </div>
+
+        <div class="players-grid">
+          <div class="player">
+            <label>Player 1 — Roll No</label>
+            <input id="p1roll" type="text" required />
+            <label>Player 1 — Game ID</label>
+            <input id="p1id" type="text" required />
+          </div>
+
+          <div class="player">
+            <label>Player 2 — Roll No</label>
+            <input id="p2roll" type="text" required />
+            <label>Player 2 — Game ID</label>
+            <input id="p2id" type="text" required />
+          </div>
+
+          <div class="player">
+            <label>Player 3 — Roll No</label>
+            <input id="p3roll" type="text" required />
+            <label>Player 3 — Game ID</label>
+            <input id="p3id" type="text" required />
+          </div>
+
+          <div class="player">
+            <label>Player 4 — Roll No</label>
+            <input id="p4roll" type="text" required />
+            <label>Player 4 — Game ID</label>
+            <input id="p4id" type="text" required />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="reset" class="btn-ghost">Reset</button>
+          <button type="submit" class="btn-primary">Register Team</button>
+        </div>
+
+        <p class="hint">Tip: Double-check roll numbers before submitting.</p>
+      </form>
+    </section>
+  </div>
+
+  <!-- ✅ Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getDatabase, ref, get, set, child, goOffline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDqO3hwGX_0P70gAH0pnee-my-qtPPYzJE",
+      authDomain: "eve-it444.firebaseapp.com",
+      databaseURL: "https://eve-it444-default-rtdb.firebaseio.com/",
+      projectId: "eve-it444",
+      storageBucket: "eve-it444.firebasestorage.app",
+      messagingSenderId: "849143823217",
+      appId: "1:849143823217:web:c09d7037fd1e52e80114d0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const dbRef = ref(db);
+
+    document.getElementById("regForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const squad = document.getElementById("squadName").value.trim();
+      const rolls = [
+        document.getElementById("p1roll").value.trim(),
+        document.getElementById("p2roll").value.trim(),
+        document.getElementById("p3roll").value.trim(),
+        document.getElementById("p4roll").value.trim()
+      ];
+      const ids = [
+        document.getElementById("p1id").value.trim(),
+        document.getElementById("p2id").value.trim(),
+        document.getElementById("p3id").value.trim(),
+        document.getElementById("p4id").value.trim()
+      ];
+
+      try {
+        const snapshot = await get(child(dbRef, "bgmireg"));
+        let alreadyExists = false;
+        let rollExists = false;
+
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          if (data[squad]) alreadyExists = true;
+          else {
+            for (const key in data) {
+              const team = data[key];
+              if (Object.values(team.players).some(p => rolls.includes(p.roll))) {
+                rollExists = true;
+                break;
+              }
+            }
+          }
+        }
+
+        if (alreadyExists) {
+          alert("⚠️ Squad name already registered!");
+          goOffline(db);
+          return;
+        }
+        if (rollExists) {
+          alert("⚠️ One or more roll numbers are already registered!");
+          goOffline(db);
+          return;
+        }
+
+        await set(ref(db, "bgmireg/" + squad), {
+          squadName: squad,
+          timestamp: new Date().toISOString(),
+          players: {
+            player1: { roll: rolls[0], gameid: ids[0] },
+            player2: { roll: rolls[1], gameid: ids[1] },
+            player3: { roll: rolls[2], gameid: ids[2] },
+            player4: { roll: rolls[3], gameid: ids[3] },
+          },
+        });
+
+        alert("✅ Team Registered Successfully!");
+        document.getElementById("regForm").reset();
+      } catch (err) {
+        console.error(err);
+        alert("❌ Error during registration.");
+      } finally {
+        goOffline(db); // 🔒 Close connection after completion
+      }
+    });
+  </script>
+</body>
+</html>
