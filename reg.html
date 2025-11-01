@@ -136,7 +136,7 @@
   <script type="module">
     
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    import { getDatabase, ref, set, get, child, goOffline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+    import { getDatabase, ref, set, get, child, goOffline,goOnline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDqO3hwGX_0P70gAH0pnee-my-qtPPYzJE",
@@ -164,11 +164,11 @@
   
      const selectedEvent = localStorage.getItem("eventName");
      document.getElementById("eve").textContent = selectedEvent;
-  
+  goOffline(db);
       
 
     document.getElementById("registerBtn").addEventListener("click", async () => {
-         
+       goOnline(db);
       if (!username || !rollno) {
         alert("❌ Missing user info. Please log in again.");
         window.location.href = "index.html";
@@ -212,3 +212,4 @@
   </script>
 </body>
 </html>
+
