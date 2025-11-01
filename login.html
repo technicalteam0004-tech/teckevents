@@ -140,6 +140,7 @@ window.closeModal = function() {
   const db = getDatabase(app);
   const dbRef = ref(db);
 
+   goOffline(db);
   async function handleLogin() {
     const roll = document.getElementById("roll").value.trim();
     const pass = document.getElementById("pwd").value.trim();
@@ -188,3 +189,4 @@ window.closeModal = function() {
 
 </body>
 </html>
+
