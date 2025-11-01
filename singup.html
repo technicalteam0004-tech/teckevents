@@ -140,7 +140,7 @@
   <!-- Firebase JS SDKs -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    import { getDatabase, ref, set, get, child, goOffline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+    import { getDatabase, ref, set, get, child, goOffline,goOnline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 
     // Firebase config
     const firebaseConfig = {
@@ -156,11 +156,12 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
+   goOffline(db);
 
     const form = document.getElementById('signupForm');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
+      goOnline(db);
       const username = document.getElementById('username');
       let roll = document.getElementById('rollno').value.trim().toUpperCase();
       const pass = document.getElementById('password');
@@ -226,3 +227,4 @@
   </script>
 </body>
 </html>
+
