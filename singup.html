@@ -156,12 +156,12 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
-   goOffline(db);
+  
 
     const form = document.getElementById('signupForm');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      goOnline(db);
+   
       const username = document.getElementById('username');
       let roll = document.getElementById('rollno').value.trim().toUpperCase();
       const pass = document.getElementById('password');
@@ -227,4 +227,5 @@
   </script>
 </body>
 </html>
+
 
