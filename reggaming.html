@@ -234,7 +234,7 @@
   <!-- ✅ Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    import { getDatabase, ref, get, set, child, goOffline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+    import { getDatabase, ref, get, set, child, goOffline, goOnline } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDqO3hwGX_0P70gAH0pnee-my-qtPPYzJE",
@@ -249,9 +249,12 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const dbRef = ref(db);
+    goOffline(db);
 
     document.getElementById("regForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
+     goOnline(db);
 
       const squad = document.getElementById("squadName").value.trim();
       const rolls = [
@@ -320,3 +323,4 @@
   </script>
 </body>
 </html>
+
