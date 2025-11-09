@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Fest Chatbot 💬</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: url('https://images.unsplash.com/photo-1614849286521-4c58b2f0ff15?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870') 
+                  no-repeat center center/cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: #fff;
+      text-align: center;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      font-size: 1.5rem;
+    }
+
+    #chatbox {
+      width: 90%;
+      max-width: 400px;
+      height: 75vh;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin-top: 15px;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    #messages {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      scroll-behavior: smooth;
+    }
+
+    .msg {
+      padding: 10px 14px;
+      border-radius: 15px;
+      max-width: 80%;
+      line-height: 1.4;
+      word-wrap: break-word;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .user {
+      background: rgba(90, 140, 255, 0.25);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+      box-shadow: 0 0 6px rgba(74,108,255,0.4);
+    }
+
+    .bot {
+      background: rgba(255, 255, 255, 0.25);
+      color: #000;
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+      box-shadow: 0 0 6px rgba(255,255,255,0.3);
+    }
+
+    #inputArea {
+      display: flex;
+      padding: 8px;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    #userInput {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 0 4px rgba(255,255,255,0.3);
+      transition: background 0.3s ease;
+    }
+
+    #userInput::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    #userInput:focus {
+      background: rgba(255,255,255,0.35);
+    }
+
+    #sendBtn {
+      margin-left: 8px;
+      background: rgba(74, 108, 255, 0.85);
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 8px rgba(74,108,255,0.6);
+      transition: background 0.3s ease, transform 0.1s ease;
+      font-size: 14px;
+    }
+
+    #sendBtn:hover {
+      background: rgba(58, 87, 208, 0.9);
+      transform: scale(1.05);
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.4);
+      border-radius: 3px;
+    }
+
+    /* 📱 Responsive design tweaks */
+    @media (max-width: 600px) {
+      body {
+        justify-content: flex-start;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+        margin-top: 15px;
+      }
+
+      #chatbox {
+        width: 95%;
+        height: 80vh;
+      }
+
+      #userInput {
+        font-size: 13px;
+      }
+
+      #sendBtn {
+        font-size: 13px;
+        padding: 8px 12px;
+      }
+
+      .msg {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>🎉 Event Fest Chatbot</h2>
+  <div id="chatbox">
+    <div id="messages">
+      <div class="msg bot">Hello 👋! Ask about events, details, or any festival information.</div>
+    </div>
+    <div id="inputArea">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/+esm";
+
+    const HF_TOKEN = "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";
+    const input = document.getElementById("userInput");
+    const btn = document.getElementById("sendBtn");
+    const messages = document.getElementById("messages");
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("msg", sender);
+      msg.textContent = text;
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    btn.addEventListener("click", async () => {
+      const userMessage = input.value.trim();
+      if (!userMessage) return;
+
+      addMessage(userMessage, "user");
+      input.value = "";
+      addMessage("⏳ Thinking...", "bot");
+
+      try {
+        const client = await Client.connect("radhe57/fest_event_57", { hf_token: HF_TOKEN });
+        const result = await client.predict("/predict", { text: userMessage });
+        const botMsg = result.data[0] || "Sorry, I didn’t understand that.";
+        messages.lastChild.textContent = "💬 " + botMsg;
+      } catch (err) {
+        messages.lastChild.textContent = "⚠️ Error: " + err.message;
+      }
+    });
+
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") btn.click();
+    });
+  </script>
+</body>
+</html>
